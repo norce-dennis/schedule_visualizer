@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: basepartnersense.azurecr.io
-  IMAGE_NAME: schedule_visualizer
+  IMAGE_NAME: doc-test
   CUSTOMER: doc-test
   ENVIRONMENT: stage
 
@@ -38,7 +38,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.CUSTOMER }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -48,8 +48,6 @@ jobs:
           environment: ${{ env.ENVIRONMENT }}
           image_tag: ${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
           customer: ${{ env.CUSTOMER }}
-          config_file: .base/config.yaml
-          api_url: https://base-api.norce.tech
           api_key: ${{ secrets.BASE_PLATFORM_API_KEY }}
           wait_for_healthy: 'true'
-          wait_timeout: '600'
+          wait_timeout: '300'
