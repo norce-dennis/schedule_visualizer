@@ -46,7 +46,6 @@ jobs:
         uses: NorceTech/base-actions/deploy@v1
         with:
           environment: ${{ env.ENVIRONMENT }}
-          image: ${{ env.REGISTRY }}/${{ env.CUSTOMER }}
           image_tag: ${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
           customer: ${{ env.CUSTOMER }}
           config_file: .base/config.yaml
