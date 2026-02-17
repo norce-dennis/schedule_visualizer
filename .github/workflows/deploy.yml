@@ -48,7 +48,6 @@ jobs:
           environment: ${{ env.ENVIRONMENT }}
           image_tag: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
           customer: ${{ env.CUSTOMER }}
-          image: ${{ env.IMAGE_NAME }}
           config_file: .base/config.yaml
           api_url: https://base-api.norce.tech
           api_key: ${{ secrets.BASE_PLATFORM_API_KEY }}
