@@ -1,0 +1,27 @@
+environments:
+  # Global env vars — applied to all environments
+  global:
+    env:
+      - name: PORT
+        value: '3002'
+      - name: NODE_ENV
+        value: 'stage'
+
+  stage:
+    replicas: 1
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 5
+      triggers:
+        - type: cpu
+          utilizationPercentage: 70
+        - type: memory
+          utilizationPercentage: 80
+        - type: http
+          requestsPerSecond: 50
+
