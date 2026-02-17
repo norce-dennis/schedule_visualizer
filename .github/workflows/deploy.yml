@@ -38,7 +38,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
+          tags: ${{ env.REGISTRY }}/${{ env.CUSTOMER }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -46,7 +46,7 @@ jobs:
         uses: NorceTech/base-actions/deploy@v1
         with:
           environment: ${{ env.ENVIRONMENT }}
-          image_tag: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
+          image_tag: ${{ env.REGISTRY }}/${{ env.CUSTOMER }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
           customer: ${{ env.CUSTOMER }}
           config_file: .base/config.yaml
           api_url: https://base-api.norce.tech
