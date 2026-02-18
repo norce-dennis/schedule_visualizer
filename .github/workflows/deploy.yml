@@ -7,8 +7,8 @@ on:
 
 env:
   REGISTRY: basepartnersense.azurecr.io
-  IMAGE_NAME: doc-test
-  CUSTOMER: doc-test
+  IMAGE_NAME: second-doc-test
+  CUSTOMER: second-doc-test
   ENVIRONMENT: stage
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}, stage
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -46,7 +46,7 @@ jobs:
         uses: NorceTech/base-actions/deploy@v1
         with:
           environment: ${{ env.ENVIRONMENT }}
-          image_tag: ${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
+          image_tag: ${{ env.ENVIRONMENT }}
           customer: ${{ env.CUSTOMER }}
           api_key: ${{ secrets.BASE_PLATFORM_API_KEY }}
           wait_for_healthy: 'true'
