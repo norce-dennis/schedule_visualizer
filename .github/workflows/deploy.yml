@@ -46,7 +46,6 @@ jobs:
           platforms: linux/arm64
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.ENVIRONMENT }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
