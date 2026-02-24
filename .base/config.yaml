@@ -3,11 +3,12 @@ environments:
   global:
     env:
       - name: PORT
-        value: '3002'
+        value: '3000'
       - name: NODE_ENV
         value: 'stage'
 
   stage:
+    containerPort: 3000
     replicas: 1
     resources:
       limits:
