@@ -7,8 +7,8 @@ on:
 
 env:
   REGISTRY: basepartnersense.azurecr.io
-  IMAGE_NAME: second-doc-test
-  CUSTOMER: second-doc-test
+  IMAGE_NAME: schedulizer
+  APP: schedulizer
   ENVIRONMENT: stage
 
 jobs:
@@ -22,6 +22,11 @@ jobs:
       - name: Run slugify
         id: slugify
         uses: eltimn/slugify-action@v2.0.1
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -38,6 +43,7 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/arm64
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.slugify.outputs.branch }}-${{ steps.slugify.outputs.sha }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.ENVIRONMENT }}
@@ -49,8 +55,7 @@ jobs:
         with:
           environment: ${{ env.ENVIRONMENT }}
           image_tag: ${{ env.ENVIRONMENT }}
-          customer: ${{ env.CUSTOMER }}
+          app: ${{ env.APP }}
           api_key: ${{ secrets.BASE_PLATFORM_API_KEY }}
           wait_for_healthy: 'true'
           wait_timeout: '300'
-          app: schedulizer
