@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
-import { PORT, NODE_ENV } from './config';
+import { PORT } from './config';
+import { version } from '../package.json';
 import { initializeDatabase } from './db/schema';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -34,26 +35,23 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Serve static files in production
-if (NODE_ENV !== 'development') {
-  const staticPath = path.join(__dirname, '../../dist');
-  app.use(express.static(staticPath));
+// Serve static files
+const staticPath = path.join(__dirname, '../../dist');
+app.use(express.static(staticPath));
 
-  // SPA fallback - serve index.html for all non-API routes
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      res.sendFile(path.join(staticPath, 'index.html'));
-    } else {
-      res.status(404).json({ error: 'API endpoint not found' });
-    }
-  });
-}
+// SPA fallback - serve index.html for all non-API routes
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api')) {
+    res.sendFile(path.join(staticPath, 'index.html'));
+  } else {
+    res.status(404).json({ error: 'API endpoint not found' });
+  }
+});
 
 // Error handler (must be last)
 app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Environment: ${NODE_ENV}`);
+  console.log(`Server v${version} running on port ${PORT}`);
 });
