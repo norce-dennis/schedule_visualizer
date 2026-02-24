@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: basepartnersense.azurecr.io
+  REGISTRY: basetestpartner.azurecr.io
   IMAGE_NAME: schedulizer
   APP: schedulizer
   ENVIRONMENT: stage
