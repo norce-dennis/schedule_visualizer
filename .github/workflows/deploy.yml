@@ -53,3 +53,4 @@ jobs:
           api_key: ${{ secrets.BASE_PLATFORM_API_KEY }}
           wait_for_healthy: 'true'
           wait_timeout: '300'
+          app: schedulizer
